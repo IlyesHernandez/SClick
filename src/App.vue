@@ -40,8 +40,8 @@ export default {
     <button @click="startGame()" class="start-btn">Start</button>
     <button v-show="showClickButton" @click="count++">click</button>
     <button @click="count = 0" class="reset-btn">Reset</button>
-    <h1 v-show="showResult">Tu as cliqué {{ result }} fois en {{ actualSecond }} seconde(s) !</h1>
-    <h1 v-show="showActualClick">Tu as actuellement cliqué {{ count }} fois.</h1>
+    <h1 v-show="showResult">You clicked {{ count }} times in {{ actualSecond }} second(s)!</h1>
+    <h1 v-show="showActualClick">You have currently clicked a total of {{ count }} times!</h1>
   </div>
 </template>
 
