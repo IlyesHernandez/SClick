@@ -7,8 +7,11 @@ export default {
       actualSecond: 0,
       showClickButton: false,
       result: 0,
+      showStart: true,
       showActualClick: false,
-      showResult: false
+      showResult: false,
+      disableStart: false,
+      backgroundColorStart: 'rgb(17, 183, 64)'
     }
   },
   methods: {
@@ -17,6 +20,7 @@ export default {
       this.showClickButton = true;
       this.showActualClick = true;
       this.showResult = false;
+      this.showStart = false;
       let seconds = this.second * 1000;
       setTimeout(() => {
         let result = this.count;
@@ -26,6 +30,13 @@ export default {
         this.result = result;
         this.showResult = true;
         this.showActualClick = false;
+        this.showStart = true;
+        this.disableStart = true;
+        this.backgroundColorStart = 'gray'
+        setTimeout(() => {
+          this.disableStart = false
+          this.backgroundColorStart = 'rgb(17, 183, 64)'
+        }, 1000)
         this.actualSecond = this.second;
         this.second = null;
       }, seconds)
@@ -36,11 +47,10 @@ export default {
 
 <template>
   <div class="button">
-    <input type="text" v-model="second"/>
-    <button @click="startGame()" class="start-btn">Start</button>
-    <button v-show="showClickButton" @click="count++">click</button>
-    <button @click="count = 0" class="reset-btn">Reset</button>
-    <h1 v-show="showResult">You clicked {{ result }} times in {{ actualSecond }} second(s).</h1>
+    <input type="text" placeholder="Combien de seconde(s) ?" v-model="second"/>
+    <button :disabled="disableStart" :style="{backgroundColor: backgroundColorStart}" v-show="showStart" @click="startGame()" class="start-btn">Commencé</button>
+    <button v-show="showClickButton" @click="count++">Clique ici</button>
+    <h1 v-show="showResult">Tu as cliqué {{ result }} fois en {{ actualSecond }} seconde(s).</h1>
     <h1 v-show="showActualClick">Tu as actuellement cliqué {{ count }} fois.</h1>
   </div>
 </template>
@@ -55,13 +65,13 @@ button {
   padding-bottom: 15px;
   font-size: 2.5rem;
   border: none;
-  background-color: rgb(51, 40, 209);
   color: white;
   border-radius: 10px;
   cursor: pointer;
   transition-duration: 200ms;
   transition-property: all;
 }
+
 button:hover {
   background-color: rgb(65, 54, 218);
 }
@@ -76,17 +86,6 @@ button:hover {
   font-family: Arial,sans-serif;
   color: white;
   font-size: 2.5rem;
-}
-.button .reset-btn {
-  background-color: transparent;
-  margin-top: 14px;
-  border:1px solid rgb(56, 45, 211);
-  font-size: 1.5rem;
-  transition-duration: 100ms;
-}
-
-.button .reset-btn:hover {
-  background-color: rgb(51, 40, 209)
 }
 .button .start-btn {
   background-color: rgb(17, 183, 64);
