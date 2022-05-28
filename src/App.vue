@@ -11,11 +11,11 @@ export default {
       showActualClick: false,
       showResult: false,
       disableStart: false,
-      backgroundColorStart: 'rgb(17, 183, 64)'
-    }
+      backgroundColorStart: "rgb(17, 183, 64)",
+    };
   },
   methods: {
-    startGame(){
+    startGame() {
       let defaultCount = this.count;
       this.showClickButton = true;
       this.showActualClick = true;
@@ -24,7 +24,7 @@ export default {
       let seconds = this.second * 1000;
       setTimeout(() => {
         let result = this.count;
-        console.log(result)
+        console.log(result);
         this.count = 0;
         this.showClickButton = false;
         this.result = result;
@@ -32,31 +32,49 @@ export default {
         this.showActualClick = false;
         this.showStart = true;
         this.disableStart = true;
-        this.backgroundColorStart = 'gray'
+        this.backgroundColorStart = "gray";
         setTimeout(() => {
-          this.disableStart = false
-          this.backgroundColorStart = 'rgb(17, 183, 64)'
-        }, 1000)
+          this.disableStart = false;
+          this.backgroundColorStart = "rgb(17, 183, 64)";
+        }, 1000);
         this.actualSecond = this.second;
         this.second = null;
-      }, seconds)
-    }
-  }
-}
+      }, seconds);
+    },
+  },
+};
 </script>
 
 <template>
   <div class="button">
-    <input type="text" placeholder="Combien de seconde(s) ?" v-model="second"/>
-    <button :disabled="disableStart" :style="{backgroundColor: backgroundColorStart}" v-show="showStart" @click="startGame()" class="start-btn">Commencé</button>
-    <button v-show="showClickButton" @click="count++">Clique ici</button>
-    <h1 v-show="showResult">Tu as cliqué {{ result }} fois en {{ actualSecond }} seconde(s).</h1>
-    <h1 v-show="showActualClick">Tu as actuellement cliqué {{ count }} fois.</h1>
+    <input type="text" placeholder="Combien de seconde(s) ?" v-model="second" />
+    <button
+      :disabled="disableStart"
+      :style="{ backgroundColor: backgroundColorStart }"
+      v-show="showStart"
+      @click="startGame()"
+      class="start-btn"
+    >
+      Commencé
+    </button>
+    <button class="btn-click" v-show="showClickButton" @click="count++">
+      Clique ici
+    </button>
+    <h1 v-show="showResult">
+      Tu as cliqué {{ result }} fois en {{ actualSecond }} seconde(s).
+    </h1>
+    <h1 v-show="showActualClick">
+      Tu as actuellement cliqué {{ count }} fois.
+    </h1>
+    <h1 style="color: rgba(255, 255, 255, 50%);font-size: 2rem;padding: 0;margin:0;font-weight: normal;" v-show="showResult">
+      Ton DPS est de {{ result / actualSecond }}.
+    </h1>
   </div>
 </template>
 
 <style>
 @import "./assets/style.css";
+
 
 button {
   padding-right: 40px;
@@ -73,6 +91,13 @@ button {
   transition-property: all;
 }
 
+.btn-click {
+  padding-right: 85px;
+  padding-left: 85px;
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+
 button:hover {
   background-color: rgb(65, 54, 218);
 }
@@ -84,7 +109,7 @@ button:hover {
   flex-direction: column;
 }
 .button h1 {
-  font-family: Arial,sans-serif;
+  font-family: Arial, sans-serif;
   color: white;
   font-size: 2.5rem;
 }
